@@ -1,7 +1,4 @@
-﻿server:
-  port: 8761
-
-eureka:
+﻿eureka:
   instance:
     hostname: localhost
   # standalone mode

@@ -1,19 +1,13 @@
 # COMMON APPLICATION PROPERTIES
 
 server:
-  # start services on random port by default
-  port: 0
+  # start services on 8080 port by default
+  port: 8080
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
 
 # embedded database init, supports mysql too trough the 'mysql' spring profile
 spring:
-  datasource:
-    schema: classpath*:db/hsqldb/schema.sql
-    data: classpath*:db/hsqldb/data.sql
-  sleuth:
-    sampler:
-      probability: 1.0
   cloud:
     config:
       # Allow the microservices to override the remote properties with their own System properties or config file
@@ -43,20 +37,25 @@ management:
   endpoint:
     metrics:
       enabled: true
-    prometheus:
-      enabled: true
+
   endpoints:
     web:
       exposure:
         include: '*'
+
   metrics:
-    export:
-      prometheus:
-        enabled: true
+    enable:
+      all: true
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            request: true
+
 
 ---
 spring:
-  profiles: mysql
+#  profiles: mysql
   datasource:
     schema: classpath*:db/mysql/schema.sql
     data: classpath*:db/mysql/data.sql
